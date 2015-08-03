@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" method="upgrade" group="hikashop" client="site">
+	<name>Brainforge Item Delivery Date - Hikashop Plugin</name>
+	<creationDate>03 July 2012</creationDate>
+	<version>3.3.1</version>
+	<author>Jonathan Brain</author>
+	<authorEmail>brainforge@btinternet.com</authorEmail>
+	<authorUrl>http://www.brainforge.co.uk</authorUrl>
+	<copyright>Copyright (C) 2012 Jonathan Brain - All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>
+Handles customer item delivery date selection.&lt;br /&gt;
+This allows different delivery dates for each item.&lt;br /&gt;
+See separate Order Delivery Date plugin if you want one delivery date per order.&lt;br /&gt;
+&lt;br /&gt;
+Requires:&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style="font-weight:bolder"&gt;(a)&lt;/span&gt; Add Hikashop custom item field called: &lt;i&gt;item_delivery_date&lt;/i&gt;&lt;br /&gt;
+Parameters: text, required, publish, display both front-end and back-end form.&lt;br /&gt;&lt;br /&gt;
+This field contains raw the value of the HTML OPTION for the user's selected delivery date.&lt;br /&gt;
+This raw value can be used, if required, to determine shipping plugin availability and pricing. &lt;br /&gt;
+&lt;br /&gt;
+Can be made optional by setting to non-required. See Customer Messages on right hand side.&lt;br /&gt;
+If optional the no delivery date prompt will be ignored (i.e. blank option label will be shown).&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style="font-weight:bolder"&gt;(b)&lt;/span&gt; Add Hikashop custom item field called: &lt;i&gt;item_delivery_date_text&lt;/i&gt;&lt;br /&gt;
+Parameters: text, required, publish, display both front-end and back-end form.&lt;br /&gt;&lt;br /&gt;
+This field contains the label of the HTML OPTION for the user's selected delivery date.&lt;br /&gt;
+This field is displayed in order listings, invoices and emails.&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style="font-weight:bolder"&gt;(c)&lt;/span&gt; Modify Hikashop display views;&lt;br /&gt;
+Refer to example files in the &lt;i&gt;html&lt;/i&gt; folder attached to this plugin.&lt;br /&gt;
+See code between BRAINFORGE comments for examples of how the new fields are handled.&lt;br /&gt;
+Make sure you only change the template overrides, not the core Hikashop files!&lt;br /&gt;
+See the &lt;i&gt;html/emails&lt;/i&gt; folder for advice on customising emails.&lt;br /&gt; 
+&lt;br /&gt;
+&lt;hr /&gt;
+The raw value field contains the following information: Ymd@x@y@x&lt;br /&gt;
+Where:&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;Ymd = the delivery date (PHP date format)&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;x = the number of calendar days since order creation.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;y = the number of delivery days (including extras) since order creation.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;z = the number of standard delivery days since order creation.&lt;br /&gt;
+&lt;br /&gt;
+There is a separate &lt;i&gt;bfmanual&lt;/i&gt; Hikashop shipping plugin which can be used to cater for different carriers / prices depending on the delivery date. 
+  </description>
+	<files>
+		<filename plugin="bfitemdeliverydate">bfitemdeliverydate.php</filename>
+    <folder>html</folder>
+		<filename>index.html</filename>
+	</files>
+
+	<scriptfile>script.php</scriptfile>
+
+	<languages>
+		<language tag="en-GB">en-GB.plg_hikashop_bfitemdeliverydate.ini</language>
+		<language tag="en-GB">en-GB.plg_hikashop_bfitemdeliverydate.sys.ini</language>
+	</languages>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+        <field name="lastestordertime" type="text" size="6" default="14:30" required="true"
+               label="Last order time"
+               description="Enter the latest order time for next (or earliest) day delivery.&lt;br /&gt;Use 24hr format - H:i&lt;br /&gt;E.G. 06:08 17:05" />
+        <field name="maxdaysinadvance" type="text" size="5" default="28"
+               label="Days in advance to show"
+               description="Enter maximum days in advance delivery can be arranged." />
+        <field name="minadvancedays" type="text" size="5" default="0" required="true"
+               label="Minimum days before delivery"
+               description="Enter the minimum number of days between ordering and delivery (enter 0 for next day deliveries)." />
+        <field name="defaultdaysdelay" type="text" size="5" default="0" required="true"
+               label="Default delivery delay"
+               description="Enter the number of days delay between the order day and the default delivery day (0 = next day always shown)." />
+  		</fieldset>
+
+			<fieldset name="delivery_weekdays" label="Normal Delivery Days">
+				<field
+					name="monday" type="radio" label="Monday" default="1"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="tuesday" type="radio" label="Tuesday" default="1"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="wednesday" type="radio" label="Wednesday" default="1"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="thursday" type="radio" label="Thursday" default="1"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="friday" type="radio" label="Friday" default="1"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="saturday" type="radio" label="Saturday" default="0"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+				<field
+					name="sunday" type="radio" label="Sunday" default="0"
+					description="Select YES if delivery available, otherwise NO." >
+					<option value="0">No</option> <option value="1">Yes</option>
+				</field>
+  		</fieldset>
+
+			<fieldset name="extra_days" label="Extra Delivery Days">
+				<field
+					name="extradays" type="textarea" label="Extra deliveries on" cols="14" rows="10" default="2012-03-18"
+					description="Enter dates on separate lines when deliveries are available on days they normally would not be (e.g. a special Sunday delivery).&lt;br/&gt;Note that blocked dates always have priority.&lt;br/&gt;Use date format Y-M-d.&lt;br/&gt;For instance:&lt;br/&gt;2012-07-01&lt;br/&gt;2012-06-30"
+        />
+  		</fieldset>
+
+			<fieldset name="blocked_days" label="Blocked Delivery Days">
+				<field
+					name="blockeddays" type="textarea" label="No deliveries on" cols="14" rows="10" default="2012-01-01
+2012-12-25
+2013-01-01
+2013-12-25
+2014-01-01
+2014-12-25"
+					description="Enter dates on separate lines when deliveries are &lt;b&gt;NOT&lt;/b&gt; available.&lt;br/&gt;Note that blocked dates always take priority.&lt;br/&gt;Use date format Y-M-d.&lt;br/&gt;For instance:&lt;br/&gt;2012-12-25&lt;br/&gt;2013-12-25&lt;br/&gt;2014-12-25"
+        />
+  		</fieldset>
+
+			<fieldset name="messages" label="Customer Messages">
+				<field
+					name="shownodate" type="radio" label="No delivery date" default="0"
+					description="Select SHOW if you want to prompt customer to select the date when none has been selected." >
+					<option value="0">Hide</option> <option value="1">Show</option>
+				</field>
+        <field name="selectdate" type="text" size="40" default="Please select delivery date..."
+               label="No delivery date prompt"
+               description="Enter the text to be displayed in the delivery date select box if no date has been selected." />
+        <field name="dateformat" type="text" size="12" default="D, j F Y" required="true"
+               label="Date format"
+               description="Enter the format of the delivery dates to be displayed to customer in select list text (use PHP date format)." />
+        <field name="nodeliverydate" type="text" size="40" default="Please enter delivery date." required="true"
+               label="No delivery date error"
+               description="Enter the error message to be displayed if customer has not selected a delivery date." />
+        <field name="misseddeliverytime" type="text" size="40" default="Sorry, %s is no longer available as a delivery date." required="true"
+               label="Missed delivery time"
+               description="Enter the error message to be displayed if customer takes a long time creating the order and misses the deadline. Include %s in message to show the unavailable date." />
+  		</fieldset>
+
+			<fieldset name="advanced">
+				<field
+					name="refreshshipping" type="radio" label="Refresh shipping" default="0"
+					description="Select YES to refresh shipping options as soon as customer selects a delivery date." >
+					<option value="0">No</option>
+          <!--
+          <option value="1">Yes</option>
+          -->
+				</field>
+				<field
+					name="onloadinit" type="list" label="Onload mechanism" default="0"
+					description="Assigns default value to date on page initialisation." >
+					<option value="0">Mootools - window.addEvent(...)</option>
+					<option value="1">JQuery - ready(...)</option>
+					<option value="2">window.onload</option>
+				</field>
+  		</fieldset>
+		</fields>
+	</config>
+</extension>

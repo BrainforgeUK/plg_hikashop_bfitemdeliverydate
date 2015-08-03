@@ -1,0 +1,21 @@
+For the emails you need to get rid of the Raw data display.
+See Hikashop admin system / emails.
+
+The related files have names like media/com_hikashop/mail/...html.modified.php
+It is often easier to edit the files directly rather than use the admin screens.
+
+See the following emails:
+  ORDER_ADMIN NOTIFICATION
+  ORDER CREATION NOTIFICATION
+  ORDER STATUS NOTIFICATION
+
+Look for line:
+  if(empty($item->$namekey)) continue;
+
+Add the following lines after it:
+  // Start Added BRAINFORGE 12 Sept 2012
+  if ($namekey == 'item_delivery_date' && class_exists('plgHikashopBFItemDeliveryDate')) continue;
+  // End Added BRAINFORGE 12 Sept 2012
+
+Changes to the text version of the emails may not be necessary, but check just in case.
+Check for impact with any other email customisations. 
