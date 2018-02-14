@@ -170,4 +170,9 @@ There is a separate &lt;i&gt;bfmanual&lt;/i&gt; Hikashop shipping plugin which c
   		</fieldset>
 		</fields>
 	</config>
+
+
+	<updateservers>
+		<server type="extension" priority="1" name="Item Delivery Date for Hikashop by BrainforgeUK">https://brainforge.co.uk/media/com_bfupdater/plg_hikashop_bfitemdeliverydate.xml</server>
+	</updateservers>
 </extension>
