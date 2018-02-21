@@ -2,7 +2,7 @@
 <extension version="2.5" type="plugin" method="upgrade" group="hikashop" client="site">
 	<name>Brainforge Item Delivery Date - Hikashop Plugin</name>
 	<creationDate>03 July 2012</creationDate>
-	<version>3.3.1</version>
+	<version>3.3.2</version>
 	<author>Jonathan Brain</author>
 	<authorEmail>brainforge@btinternet.com</authorEmail>
 	<authorUrl>http://www.brainforge.co.uk</authorUrl>
@@ -173,6 +173,8 @@ There is a separate &lt;i&gt;bfmanual&lt;/i&gt; Hikashop shipping plugin which c
 
 
 	<updateservers>
-		<server type="extension" priority="1" name="Item Delivery Date for Hikashop by BrainforgeUK">https://brainforge.co.uk/media/com_bfupdater/plg_hikashop_bfitemdeliverydate.xml</server>
+		<server type="extension" priority="1" name="Item Delivery Date for Hikashop by BrainforgeUK">
+			https://brainforge.co.uk/component/bfupdater?element=plg_hikashop_bfitemdeliverydate.xml
+		</server>
 	</updateservers>
 </extension>
